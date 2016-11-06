@@ -1,0 +1,48 @@
+div.logo {
+  padding-left 100px;
+}
+
+th, td {
+    padding: 30px;
+}
+
+table tr th:nth-child(1){
+    width: 70%;
+}
+
+div.game {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    padding: 25px;
+    margin: 25px;
+}
+
+div.leaderboard {
+    background: url('http://www.woodhavenstable.com/sitebuilder/images/fzm-Cork2-794x935.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-align: center;
+    padding: 15px;
+    margin: 25px;
+}
+
+body {
+    background-image: url("http://orig03.deviantart.net/ea24/f/2011/115/e/7/clannad_anime_school_clean_by_night_wolf23-d3eu3mh.jpg");
+    background-repeat: no-repeat;
+    position: relative; 
+    width: 100%;
+    font-family: 'VT323', monospace;
+}
+
+footer {
+  color: white;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+  background-color: #000000;
+}
