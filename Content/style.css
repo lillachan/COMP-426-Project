@@ -1,0 +1,98 @@
+﻿@font-face {
+   font-family: 'SMB';
+   src: local('Super Mario Bros.'),
+        url('fonts/Super Mario Bros.ttf') format('truetype');
+   font-style: normal;
+}
+
+.logo {
+	position: absolute;
+	top: 0%;
+	left: 50%;
+	margin-left: -100px;
+}
+
+#game {
+	height: 480px; width: 640px; position: absolute; left: 50%; top: 57%;
+	margin-left: -580px; margin-top: -241px; border: 1px solid #ccc; overflow: hidden;
+}
+
+#world { 
+	margin: 0; padding: 0; height: 100%; width: 100%; position: absolute;
+	bottom: 0; left: 0; z-index: 0;
+}
+.gauge {
+	margin: 0; padding: 0; height: 50px; width: 70px; text-align: right; font-size: 2em;
+	font-weight: bold; position: absolute; top: 17px; right: 52px; z-index: 1000;
+	position: absolute; font-family: 'SMB';
+}
+.gaugeSprite {
+	margin: 0; padding: 0; z-index: 1000; position: absolute;
+}
+
+
+/* */
+#leaderboard {
+	float: right;
+	height: 480px; width: 500px; position: absolute; left: 50%; top: 57%;
+	margin-left: 100px; margin-top: -241px; border: 1px solid #ccc; overflow: hidden;
+	background: white;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+/* */
+
+#coinNumber {
+	left: 0;
+}
+#liveNumber {
+	right: 52px;
+}
+#coin {
+	height: 32px; width: 32px; background-image : url(mario-objects.png);
+	background-position: 0 0; top: 15px; left: 70px;
+}
+#live {
+	height: 40px; width: 40px; background-image : url(mario-sprites.png);
+	background-position : 0 -430px; top: 12px; right: 8px;
+}
+.figure {
+	margin: 0; padding: 0; z-index: 99; position: absolute;
+}
+.matter {
+	margin: 0; padding: 0; z-index: 95; position: absolute; width: 32px; height: 32px;
+}
+
+body {
+    background-image: url("http://1.bp.blogspot.com/-jDn4LoMVuDM/UhJD0GoHz9I/AAAAAAAAWAs/hI9GIlkOXpM/s1600/PolkaDotPaper24.jpg");
+    background-repeat: repeat;
+    width: 100%;
+    font-family: 'VT323', monospace;
+}
+
+footer {
+  color: white;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+  background-color: #000000;
+}
