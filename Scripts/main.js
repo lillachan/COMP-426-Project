@@ -105,7 +105,7 @@ var Level = Base.extend({
 		this.decorations = [];
 		this.items = [];
 		this.coinGauge = new Gauge('coin', 0, 0, 10, 4, true);
-		this.liveGauge = new Gauge('live', 0, 430, 6, 6, true);
+		/*this.liveGauge = new Gauge('live', 0, 430, 6, 6, true);*/
 	},
 	reload: function() {
 		var settings = {};
@@ -113,7 +113,7 @@ var Level = Base.extend({
 		
 		for(var i = this.figures.length; i--; ) {
 			if(this.figures[i] instanceof Mario) {
-				settings.lifes = this.figures[i].lifes - 1;
+				/* HEYADDY reset clock here */
 				settings.coins = this.figures[i].coins;
 				break;
 			}
@@ -279,7 +279,7 @@ var Level = Base.extend({
 			this.items[i].playFrame();
 		
 		this.coinGauge.playFrame();
-		this.liveGauge.playFrame();
+		/*HEY ADDY DO SOMETHING HERE WITH CLOCK MAYBE IDFK */
 	},
 	start: function() {
 		var me = this;
@@ -982,8 +982,6 @@ var ItemFigure = Figure.extend({
 	},
 });
 
-
-
 /*
  * -------------------------------------------
  * HERO CLASS
@@ -1019,7 +1017,6 @@ var Mario = Hero.extend({
 		this.setSize(80, 80);
 		this.cooldown = 0;
 		this.setMarioState(mario_states.normal);
-		this.setLifes(constants.start_lives);
 		this.setCoins(0);
 		this.deathBeginWait = Math.floor(700 / constants.interval);
 		this.deathEndWait = 0;
@@ -1190,14 +1187,6 @@ var Mario = Hero.extend({
 		}
 				
 		this.level.world.parent().children('#coinNumber').text(this.coins);
-	},
-	addLife: function() {
-		this.level.playSound('liveupgrade');
-		this.setLifes(this.lifes + 1);
-	},
-	setLifes : function(lifes) {
-		this.lifes = lifes;
-		this.level.world.parent().children('#liveNumber').text(this.lifes);
 	},
 	death: function() {
 		if(this.deathBeginWait) {
@@ -1748,8 +1737,8 @@ function loadLevel() {
 		$("<div>").attr('id', 'coinNumber').addClass("gauge").append("0"))
 	.append(
 		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
-	.append(
-		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
+	// .append(
+// 		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
 	.append(
 		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
 	var level = new Level('world');
