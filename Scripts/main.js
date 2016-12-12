@@ -982,6 +982,11 @@ var ItemFigure = Figure.extend({
 	},
 });
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master
 /*
  * -------------------------------------------
  * HERO CLASS
@@ -1223,6 +1228,8 @@ var Mario = Hero.extend({
 		this.setImage(images.sprites, 81, 324);
 		this.level.playMusic('die');
 		this._super();
+		insertScore(this.coins);
+		getScores();
 	},
 	hurt: function(from) {
 		if(this.deadly)
@@ -1368,9 +1375,74 @@ var Gumpa = Enemy.extend({
  * DOCUMENT READY STARTUP METHOD
  * -------------------------------------------
  */
+$(document).on('click', '#start-game', function() {
+    loadLevel();
+});
+
 $(document).ready(function() {
+	titleScreen();
+	getScores();
+});
+
+/*
+ *-------------------------------------------
+ * Scene Functions
+ *-------------------------------------------
+*/
+
+function titleScreen() {
+	$("#game").append(
+		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+}
+
+
+function loadLevel() {
+	$("#game").empty().append(
+		$("<div>").attr('id', "world"))
+	.append(
+		$("<div>").attr('id', 'coinNumber').addClass("gauge").append("0"))
+	.append(
+		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
+	.append(
+		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
+	.append(
+		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
 	var level = new Level('world');
 	level.load(definedLevels[0]);
 	level.start();
 	keys.bind();
-});
+}
+
+/*
+ * --------------------------------------
+ * Highscore functions
+ * --------------------------------------
+*/
+function getScores() {
+	$("#high-scores").empty().append(
+		$("<tr>").append(
+			$("<th>").append("Rank"))
+		.append(
+			$("<th>").append("Name"))
+		.append(
+			$("<th>").append("High Score")));
+
+	$.get("../API/scores.php", function(data) {
+		var count = 1;
+		for(x in data) {
+			$("#high-scores").append(
+				$('<tr>').append(
+				    $('<td>').append(count))
+				   .append(
+				    $('<td>').append(data[x].username))
+				   .append(
+				   	$('<td>').append(data[x].score)));
+			count++;
+		}
+	}); 
+}
+
+function insertScore(score_data) {
+	console.log(score_data);
+	$.post("../API/scores.php", {username: "test", score: score_data});
+}
