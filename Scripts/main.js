@@ -2,7 +2,9 @@
 //Audio
 
 var audio = new Audio('Sunny Side Up.mp3');
+audio.loop = true;
 audio.play();
+var deathAudio = new Audio('death.mp3');
 
 /*
  * -------------------------------------------
@@ -1190,7 +1192,8 @@ var Mario = Hero.extend({
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
 		this.setImage(images.sprites, 81, 324);
-		this.level.playMusic('die');
+		audio.muted = true;
+		deathAudio.play();
 		this._super();
 		insertScore(this.coins);
 		getScores();
@@ -1278,10 +1281,10 @@ var Enemy = Figure.extend({
 
 /*
  * -------------------------------------------
- * GUMPA CLASS
+ * SQUIRREL CLASS
  * -------------------------------------------
  */
-var Gumpa = Enemy.extend({
+var Squirrel = Enemy.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setSize(34, 32);
@@ -1322,7 +1325,8 @@ var Gumpa = Enemy.extend({
 			this.setImage(images.enemies, 102, 228);
 			this.deathCount = Math.ceil(600 / constants.interval);
 		} else if(this.death_mode === death_modes.shell) {
-			this.level.playSound('shell');
+			var audio = new Audio('death');
+			audio.play();
 			this.setImage(images.enemies, 68, this.direction === directions.right ? 228 : 188);
 			this.deathFrames = Math.floor(250 / constants.interval);
 			this.deathDir = 1;
