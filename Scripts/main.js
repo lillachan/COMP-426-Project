@@ -982,11 +982,6 @@ var ItemFigure = Figure.extend({
 	},
 });
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/master
 /*
  * -------------------------------------------
  * HERO CLASS
@@ -1061,9 +1056,6 @@ var Mario = Hero.extend({
 			if(this.onground && keys.up)
 				this.jump();
 	
-			if(keys.accelerate && this.marioState === mario_states.fire)
-				this.shoot();
-			
 			if(keys.right || keys.left)
 				this.walk(keys.left, keys.accelerate);
 			else
@@ -1076,13 +1068,6 @@ var Mario = Hero.extend({
 		this.view.show();
 		this.setImage(images.sprites, this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
-	},
-	shoot: function() {
-		if(!this.cooldown) {
-			this.cooldown = constants.cooldown;
-			this.level.playSound('shoot');
-			new Bullet(this);
-		}
 	},
 	setVelocity: function(vx, vy) {
 		if(this.crouching) {
@@ -1101,27 +1086,6 @@ var Mario = Hero.extend({
 	},
 	blink: function(times) {
 		this.blinking = Math.max(2 * times * constants.blinkfactor, this.blinking || 0);
-	},
-	invincible: function() {
-		this.level.playMusic('invincibility');
-		this.deadly = Math.floor(constants.invincible / constants.interval);
-		this.invulnerable = this.deadly;
-		this.blink(Math.ceil(this.deadly / (2 * constants.blinkfactor)));
-	},
-	grow: function() {
-		if(this.state === size_states.small) {
-			this.level.playSound('grow');
-			this.setState(size_states.big);
-			this.blink(3);
-		}
-	},
-	shooter: function() {
-		if(this.state === size_states.small)
-			this.grow();
-		else
-			this.level.playSound('grow');
-			
-		this.setMarioState(mario_states.fire);
 	},
 	walk: function(reverse, fast) {
 		this.vx = constants.walking_v * (fast ? 2 : 1) * (reverse ? - 1 : 1);
@@ -1395,6 +1359,30 @@ function titleScreen() {
 		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
 }
 
+/*
+ * -------------------------------------------
+ * DOCUMENT READY STARTUP METHOD
+ * -------------------------------------------
+ */
+$(document).on('click', '#start-game', function() {
+    loadLevel();
+});
+
+$(document).ready(function() {
+	titleScreen();
+	getScores();
+});
+
+/*
+ *-------------------------------------------
+ * Scene Functions
+ *-------------------------------------------
+*/
+
+function titleScreen() {
+	$("#game").append(
+		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+}
 
 function loadLevel() {
 	$("#game").empty().append(
