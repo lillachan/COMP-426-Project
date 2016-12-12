@@ -1722,6 +1722,7 @@ var PipePlant = Plant.extend({
  */
 $(document).on('click', '#start-game', function() {
     loadLevel();
+});
 
 $(document).ready(function() {
 	titleScreen();
