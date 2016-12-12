@@ -1747,7 +1747,6 @@ $(document).on('click', '#name-submit', function() {
 
 $(document).on('click', '.avatar', function() {
 	avatar = $(this).val();
-	alert(avatar);
 	loadLevel();
 })
 /*
