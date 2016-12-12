@@ -213,9 +213,9 @@ var Level = Base.extend({
 	getGridHeight: function() {
 		return this.raw.height;
 	},
-	setSounds: function(manager) {
+	/*setSounds: function(manager) {
 		this.sounds = manager;
-	},
+	},*/
 	playSound: function(label) {
 		if(this.sounds)
 			this.sounds.play(label);
@@ -1055,10 +1055,10 @@ var Mario = Hero.extend({
 		if(!this.crouching) {
 			if(this.onground && keys.up)
 				this.jump();
-				
+	
 			if(keys.accelerate && this.marioState === mario_states.fire)
 				this.shoot();
-				
+			
 			if(keys.right || keys.left)
 				this.walk(keys.left, keys.accelerate);
 			else
