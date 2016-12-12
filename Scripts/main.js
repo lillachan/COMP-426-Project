@@ -984,184 +984,7 @@ var ItemFigure = Figure.extend({
 	},
 });
 
-/*
- * -------------------------------------------
- * STARBOX CLASS
- * -------------------------------------------
- */
-var StarBox = Item.extend({
-	init: function(x, y, level) {
-		this._super(x, y, true, level);
-		this.setImage(images.objects, 96, 33);
-		this.star = new Star(x, y, level);
-		this.setupFrames(8, 4, false);
-	},
-	activate: function(from) {
-		if(!this.activated) {
-			this.star.release();
-			this.clearFrames();
-			this.bounce();
-			this.setImage(images.objects, 514, 194);
-		}
-		
-		this._super(from);
-	},
-}, 'starbox');
-var Star = ItemFigure.extend({
-	init: function(x, y, level) {
-		this._super(x, y + 32, level);
-		this.active = false;
-		this.setSize(32, 32);
-		this.setImage(images.objects, 32, 69);
-		this.view.hide();
-	},
-	release: function() {
-		this.taken = 4;
-		this.active = true;
-		this.level.playSound('mushroom');
-		this.view.show();
-		this.setVelocity(constants.star_vx, constants.star_vy);
-		this.setupFrames(10, 2, false);
-	},
-	collides: function(is, ie, js, je, blocking) {
-		return false;
-	},
-	move: function() {
-		if(this.active) {
-			this.vy += this.vy <= -constants.star_vy ? constants.gravity : constants.gravity / 2;
-			this._super();
-		}
-		
-		if(this.taken)
-			this.taken--;
-	},
-	hit: function(opponent) {
-		if(!this.taken && this.active && opponent instanceof Mario) {
-			opponent.invincible();
-			this.die();
-		}
-	},
-});
 
-/*
- * -------------------------------------------
- * MUSHROOMBOX CLASS
- * -------------------------------------------
- */
-var MushroomBox = Item.extend({
-	init: function(x, y, level) {
-		this._super(x, y, true, level);
-		this.setImage(images.objects, 96, 33);
-		this.max_mode = mushroom_mode.plant;
-		this.mushroom = new Mushroom(x, y, level);
-		this.setupFrames(8, 4, false);
-	},
-	activate: function(from) {
-		if(!this.activated) {
-			if(from.state === size_states.small || this.max_mode === mushroom_mode.mushroom)
-				this.mushroom.release(mushroom_mode.mushroom);
-			else
-				this.mushroom.release(mushroom_mode.plant);
-			
-			this.clearFrames();
-			this.bounce();
-			this.setImage(images.objects, 514, 194);
-		}
-			
-		this._super(from);
-	},
-}, 'mushroombox');
-var Mushroom = ItemFigure.extend({
-	init: function(x, y, level) {
-		this._super(x, y, level);
-		this.active = false;
-		this.setSize(32, 32);
-		this.setImage(images.objects, 582, 60);
-		this.released = 0;
-		this.view.css('z-index', 94).hide();
-	},
-	release: function(mode) {
-		this.released = 4;
-		this.level.playSound('mushroom');
-		
-		if(mode === mushroom_mode.plant)
-			this.setImage(images.objects, 548, 60);
-			
-		this.mode = mode;
-		this.view.show();
-	},
-	move: function() {
-		if(this.active) {
-			this._super();
-		
-			if(this.mode === mushroom_mode.mushroom && this.vx === 0)
-				this.setVelocity(this.direction === directions.right ? -constants.mushroom_v : constants.mushroom_v, this.vy);
-		} else if(this.released) {
-			this.released--;
-			this.setPosition(this.x, this.y + 8);
-			
-			if(!this.released) {
-				this.active = true;
-				this.view.css('z-index', 99);
-				
-				if(this.mode === mushroom_mode.mushroom)
-					this.setVelocity(constants.mushroom_v, constants.gravity);
-			}
-		}
-	},
-	hit: function(opponent) {
-		if(this.active && opponent instanceof Mario) {
-			if(this.mode === mushroom_mode.mushroom)
-				opponent.grow();
-			else if(this.mode === mushroom_mode.plant)
-				opponent.shooter();
-				
-			this.die();
-		}
-	},
-});
-
-/*
- * -------------------------------------------
- * BULLET CLASS
- * -------------------------------------------
- */
-var Bullet = Figure.extend({
-	init: function(parent) {
-		this._super(parent.x + 31, parent.y + 14, parent.level);
-		this.parent = parent;
-		this.setImage(images.sprites, 191, 366);
-		this.setSize(16, 16);
-		this.direction = parent.direction;
-		this.vy = 0;
-		this.life = Math.ceil(2000 / constants.interval);
-		this.speed = constants.bullet_v;
-		this.vx = this.direction === directions.right ? this.speed : -this.speed;
-	},
-	setVelocity: function(vx, vy) {
-		this._super(vx, vy);
-	
-		if(this.vx === 0) {
-			var s = this.speed * Math.sign(this.speed);
-			this.vx = this.direction === directions.right ? -s : s;
-		}
-		
-		if(this.onground)
-			this.vy = constants.bounce;
-	},
-	move: function() {
-		if(--this.life)
-			this._super();
-		else
-			this.die();
-	},
-	hit: function(opponent) {
-		if(!(opponent instanceof Mario)) {
-			opponent.die();
-			this.die();
-		}
-	},
-});
 
 /*
  * -------------------------------------------
@@ -1404,6 +1227,8 @@ var Mario = Hero.extend({
 		this.setImage(images.sprites, 81, 324);
 		this.level.playMusic('die');
 		this._super();
+		insertScore(this.coins);
+		getScores();
 	},
 	hurt: function(from) {
 		if(this.deadly)
@@ -1897,9 +1722,76 @@ var PipePlant = Plant.extend({
  * DOCUMENT READY STARTUP METHOD
  * -------------------------------------------
  */
+$(document).on('click', '#start-game', function() {
+    chooseName()});
+
 $(document).ready(function() {
+	titleScreen();
+	getScores();
+});
+
+/*
+ *-------------------------------------------
+ * Scene Functions
+ *-------------------------------------------
+*/
+
+function titleScreen() {
+	$("#game").append(
+		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+}
+
+function chooseName() {
+
+}
+
+function loadLevel() {
+	$("#game").empty().append(
+		$("<div>").attr('id', "world"))
+	.append(
+		$("<div>").attr('id', 'coinNumber').addClass("gauge").append("0"))
+	.append(
+		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
+	.append(
+		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
+	.append(
+		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
 	var level = new Level('world');
 	level.load(definedLevels[0]);
 	level.start();
 	keys.bind();
-});
+}
+
+/*
+ * --------------------------------------
+ * Highscore functions
+ * --------------------------------------
+*/
+function getScores() {
+	$("#high-scores").empty().append(
+		$("<tr>").append(
+			$("<th>").append("Rank"))
+		.append(
+			$("<th>").append("Name"))
+		.append(
+			$("<th>").append("High Score")));
+
+	$.get("../API/scores.php", function(data) {
+		var count = 1;
+		for(x in data) {
+			$("#high-scores").append(
+				$('<tr>').append(
+				    $('<td>').append(count))
+				   .append(
+				    $('<td>').append(data[x].username))
+				   .append(
+				   	$('<td>').append(data[x].score)));
+			count++;
+		}
+	}); 
+}
+
+function insertScore(score_data) {
+	console.log(score_data);
+	$.post("../API/scores.php", {username: "test", score: score_data});
+}
