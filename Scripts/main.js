@@ -1,10 +1,21 @@
-
-//Audio
-
+﻿/*
+ * *****
+ * WRITTEN BY FLORIAN RAPPL, 2012.
+ * florian-rappl.de
+ * mail@florian-rappl.de
+ * *****
+ */
+/*
+ *---------------------------------------------
+ * Global variables for username and avatar
+ *---------------------------------------------
+*/
 var audio = new Audio('Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
 var deathAudio = new Audio('death.mp3');
+var username;
+var avatar;
 
 /*
  * -------------------------------------------
@@ -1028,7 +1039,7 @@ var Mario = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
-		this.setImage(images.sprites, 81, 0);
+		this.setImage("../Content/"+avatar+"-sprites.png", 81, 0);
 		this.crouching = false;
 		this.fast = false;
 	},
@@ -1068,7 +1079,7 @@ var Mario = Hero.extend({
 		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
-		this.setImage(images.sprites, this.state === size_states.small ? 241 : 161, 81);
+		this.setImage("../Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
 	},
 	setVelocity: function(vx, vy) {
@@ -1095,29 +1106,29 @@ var Mario = Hero.extend({
 	walkRight: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, true, 'WalkRightSmall'))
-				this.setImage(images.sprites, 0, 0);
+				this.setImage("../Content/"+avatar+"-sprites.png", 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
-				this.setImage(images.sprites, 0, 243);
+				this.setImage("../Content/"+avatar+"-sprites.png", 0, 243);
 		}
 	},
 	walkLeft: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, false, 'WalkLeftSmall'))
-				this.setImage(images.sprites, 80, 81);
+				this.setImage("../Content/"+avatar+"-sprites.png", 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
-				this.setImage(images.sprites, 81, 162);
+				this.setImage("../Content/"+avatar+"-sprites.png", 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
-		this.setImage(images.sprites, coords.x, coords.y);
+		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
-		this.setImage(images.sprites, coords.x, coords.y);
+		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
@@ -1191,11 +1202,11 @@ var Mario = Hero.extend({
 		this.setMarioState(mario_states.normal);
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
-		this.setImage(images.sprites, 81, 324);
+		this.setImage("../Content/"+avatar+"-sprites.png", 81, 324);
 		audio.muted = true;
 		deathAudio.play();
 		this._super();
-		insertScore(this.coins);
+		insertScore(username, this.coins);
 		getScores();
 	},
 	hurt: function(from) {
@@ -1368,15 +1379,26 @@ function titleScreen() {
  * DOCUMENT READY STARTUP METHOD
  * -------------------------------------------
  */
+
+
 $(document).on('click', '#start-game', function() {
-    loadLevel();
+    chooseName();
 });
+
+$(document).on('click', '#name-submit', function() {
+	username = document.querySelector('#name').value;
+	chooseAvatar();
+});
+
+$(document).on('click', '.avatar', function() {
+	avatar = $(this).val();
+	loadLevel();
+})
 
 $(document).ready(function() {
 	titleScreen();
 	getScores();
 });
-
 /*
  *-------------------------------------------
  * Scene Functions
@@ -1386,6 +1408,22 @@ $(document).ready(function() {
 function titleScreen() {
 	$("#game").append(
 		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+}
+
+function chooseName() {
+	$("#game").empty().append(
+		$("<input>").attr({id: "name", type: "text", name: "username"}))
+	.append(
+		$("<input>").attr({id: "name-submit", type: "submit", value: "Submit"}));
+}
+
+function chooseAvatar() {
+	$("#game").empty().append(
+		$("<img>").addClass("avatar").attr({id: "one", src: "../Content/BoyAvatar.png", value: "Boy"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "two", src: "../Content/GirlAvatar.png", value: "Girl"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "three", src: "../Content/KmpAvatar.png", value: "Kmp"}));
 }
 
 function loadLevel() {
@@ -1434,7 +1472,8 @@ function getScores() {
 	}); 
 }
 
-function insertScore(score_data) {
+function insertScore(username, score_data) {
 	console.log(score_data);
-	$.post("../API/scores.php", {username: "test", score: score_data});
+	$.post("../API/scores.php", {username: username, score: score_data});
+
 }
