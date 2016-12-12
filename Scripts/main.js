@@ -1721,7 +1721,7 @@ var PipePlant = Plant.extend({
  * -------------------------------------------
  */
 $(document).on('click', '#start-game', function() {
-    chooseName()});
+    loadLevel();
 
 $(document).ready(function() {
 	titleScreen();
@@ -1739,9 +1739,6 @@ function titleScreen() {
 		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
 }
 
-function chooseName() {
-
-}
 
 function loadLevel() {
 	$("#game").empty().append(
