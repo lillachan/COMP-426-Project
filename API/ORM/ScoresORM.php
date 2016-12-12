@@ -1,10 +1,10 @@
 <?php
 class ScoresORM {
 	public static function connect() {
-		return new mysqli("localhost",
-						  "root",
-						  "",
-						  "gamedb");
+		return new mysqli("classroom.cs.unc.edu",
+						  "lilla",
+						  "CH@ngemenow99Please!lilla",
+						  "lilladb");
 	}
 	public static function getScores() {
 		$mysqli = ScoresORM::connect();
