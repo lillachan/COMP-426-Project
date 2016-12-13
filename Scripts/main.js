@@ -6,7 +6,14 @@
 var audio = new Audio('Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
-var deathAudio = new Audio('death.mp3');
+var deathAudio = new Audio('Content/death.mp3');
+var jumpAudio = new Audio('Content/jump.mp3');
+var coinAudio = new Audio('Content/coin.mp3');
+var victoryAudio = new Audio('Content/victory.mp3');
+deathAudio.load();
+jumpAudio.load();
+coinAudio.load();
+victoryAudio.load();
 var username;
 
 var avatar;
@@ -900,7 +907,7 @@ var Coin = Item.extend({
 	},
 	activate: function(from) {
 		if(!this.activated) {
-			this.level.playSound('coin');
+			coinAudio.play();
 			from.addCoin();
 			this.remove();
 		}
@@ -1070,7 +1077,7 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
-		this.level.playMusic('success');
+		victoryAudio.play();
 		this.clearFrames();
 		this.view.show();
 		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
@@ -1126,7 +1133,7 @@ var Mario = Hero.extend({
 		this.clearFrames();
 	},
 	jump: function() {
-		this.level.playSound('jump');
+		jumpAudio.play();
 		this.vy = constants.jumping_v;
 	},
 	move: function() {
@@ -1326,12 +1333,9 @@ var Squirrel = Enemy.extend({
 		this.clearFrames();
 		
 		if(this.death_mode === death_modes.normal) {
-			this.level.playSound('enemy_die');
 			this.setImage(images.enemies, 102, 228);
 			this.deathCount = Math.ceil(600 / constants.interval);
 		} else if(this.death_mode === death_modes.shell) {
-			var audio = new Audio('death');
-			audio.play();
 			this.setImage(images.enemies, 68, this.direction === directions.right ? 228 : 188);
 			this.deathFrames = Math.floor(250 / constants.interval);
 			this.deathDir = 1;
