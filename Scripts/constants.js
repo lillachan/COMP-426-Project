@@ -55,7 +55,7 @@ var constants = {
 	bounce          : 15,
 	cooldown        : 20,
 	gravity         : 2,
-	start_lives     : 1,
+	start_lives     : 0,
 	max_width       : 400,
 	max_height      : 15,
 	jumping_v       : 27,
