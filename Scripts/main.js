@@ -1,12 +1,5 @@
-﻿/*
- * *****
- * WRITTEN BY FLORIAN RAPPL, 2012.
- * florian-rappl.de
- * mail@florian-rappl.de
- * *****
- */
-/*
- *---------------------------------------------
+﻿
+ /*---------------------------------------------
  * Global variables for username and avatar
  *---------------------------------------------
 */
