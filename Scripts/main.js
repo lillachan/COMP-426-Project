@@ -1367,7 +1367,7 @@ function titleScreen() {
 
 /*
  * -------------------------------------------
- * DOCUMENT READY STARTUP METHOD
+ * DOCUMENT READY STARTUP METHOD  
  * -------------------------------------------
  */
 
@@ -1421,7 +1421,7 @@ function loadLevel() {
 	var secondsLeft = 300;
 	var countDown = setInterval(function(){
 	  secondsLeft--;  
-	  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
+	  $(".countdown").html(secondsLeft + "&nbsp" + "secs");
       if (secondsLeft == 0) {
 		  clearInterval(countDown);
       }
@@ -1434,7 +1434,7 @@ function loadLevel() {
 	.append(
 		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
 	.append(
-		$("<div>").attr('id', 'liveNumber').addClass("countdown").html(secondsLeft + "&nbsp" + "seconds"))
+		$("<div>").attr('id', 'liveNumber').addClass("countdown").html(secondsLeft + "&nbsp" + "secs"))
 	var level = new Level('world');
 	level.load(definedLevels[0]);
 	level.start();
