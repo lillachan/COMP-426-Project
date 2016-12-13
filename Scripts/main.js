@@ -1077,11 +1077,13 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
+		audio.muted = true;
 		victoryAudio.play();
 		this.clearFrames();
 		this.view.show();
 		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
+		winScreen();
 	},
 	setVelocity: function(vx, vy) {
 		if(this.crouching) {
@@ -1209,6 +1211,7 @@ var Mario = Hero.extend({
 		this._super();
 		insertScore(username, this.coins);
 		getScores();
+		loseScreen();
 	},
 	hurt: function(from) {
 		this.die();
@@ -1336,17 +1339,6 @@ var Squirrel = Enemy.extend({
 }, 'squirrel');
 
 /*
- *-------------------------------------------
- * Scene Functions
- *-------------------------------------------
-*/
-
-function titleScreen() {
-	$("#game").append(
-		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
-}
-
-/*
  * -------------------------------------------
  * DOCUMENT READY STARTUP METHOD
  * -------------------------------------------
@@ -1386,6 +1378,16 @@ function titleScreen() {
 		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
 }
 
+function winScreen(){
+	$("#game").empty().append(
+		$("<img>").attr({id: "win-game", src: 'Content/victory.png'}));
+}
+
+function loseScreen(){
+	$("#game").empty().append(
+		$("<img>").attr({id: "lose-game", src: 'Content/gameover.png'}));
+}
+
 function chooseName() {
 	$("#game").empty().append(
 		$("<input>").attr({id: "name", type: "text", name: "username"}))
@@ -1409,6 +1411,7 @@ function loadLevel() {
 	  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
       if (secondsLeft == 0) {
 		  clearInterval(countDown);
+		  loseScreen();
       }
 	}, 1000); 
 	
