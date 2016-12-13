@@ -1,8 +1,22 @@
-
-//Audio
-
-var audio = new Audio('Sunny Side Up.mp3');
+﻿/*
+ * *****
+ * WRITTEN BY FLORIAN RAPPL, 2012.
+ * florian-rappl.de
+ * mail@florian-rappl.de
+ * *****
+ */
+/*
+ *---------------------------------------------
+ * Global variables for username and avatar
+ *---------------------------------------------
+*/
+var audio = new Audio('Content/Sunny Side Up.mp3');
+audio.loop = true;
 audio.play();
+var deathAudio = new Audio('Content/death.mp3');
+var jumpAudio = new Audio('Content/jump.mp3');
+var username;
+var avatar;
 
 /*
  * -------------------------------------------
@@ -1026,7 +1040,7 @@ var Mario = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
-		this.setImage(images.sprites, 81, 0);
+		this.setImage("../Content/"+avatar+"-sprites.png", 81, 0);
 		this.crouching = false;
 		this.fast = false;
 	},
@@ -1055,7 +1069,11 @@ var Mario = Hero.extend({
 		if(!this.crouching) {
 			if(this.onground && keys.up)
 				this.jump();
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> master
 			if(keys.right || keys.left)
 				this.walk(keys.left, keys.accelerate);
 			else
@@ -1066,7 +1084,7 @@ var Mario = Hero.extend({
 		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
-		this.setImage(images.sprites, this.state === size_states.small ? 241 : 161, 81);
+		this.setImage("../Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
 	},
 	setVelocity: function(vx, vy) {
@@ -1093,33 +1111,33 @@ var Mario = Hero.extend({
 	walkRight: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, true, 'WalkRightSmall'))
-				this.setImage(images.sprites, 0, 0);
+				this.setImage("../Content/"+avatar+"-sprites.png", 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
-				this.setImage(images.sprites, 0, 243);
+				this.setImage("../Content/"+avatar+"-sprites.png", 0, 243);
 		}
 	},
 	walkLeft: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, false, 'WalkLeftSmall'))
-				this.setImage(images.sprites, 80, 81);
+				this.setImage("../Content/"+avatar+"-sprites.png", 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
-				this.setImage(images.sprites, 81, 162);
+				this.setImage("../Content/"+avatar+"-sprites.png", 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
-		this.setImage(images.sprites, coords.x, coords.y);
+		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
-		this.setImage(images.sprites, coords.x, coords.y);
+		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
-		this.level.playSound('jump');
+		jumpAudio.play();
 		this.vy = constants.jumping_v;
 	},
 	move: function() {
@@ -1189,9 +1207,12 @@ var Mario = Hero.extend({
 		this.setMarioState(mario_states.normal);
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
-		this.setImage(images.sprites, 81, 324);
-		this.level.playMusic('die');
+		this.setImage("../Content/"+avatar+"-sprites.png", 81, 324);
+		audio.muted = true;
+		deathAudio.play();
 		this._super();
+		insertScore(username, this.coins);
+		getScores();
 	},
 	hurt: function(from) {
 		if(this.deadly)
@@ -1276,10 +1297,10 @@ var Enemy = Figure.extend({
 
 /*
  * -------------------------------------------
- * GUMPA CLASS
+ * SQUIRREL CLASS
  * -------------------------------------------
  */
-var Gumpa = Enemy.extend({
+var Squirrel = Enemy.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setSize(34, 32);
@@ -1320,7 +1341,8 @@ var Gumpa = Enemy.extend({
 			this.setImage(images.enemies, 102, 228);
 			this.deathCount = Math.ceil(600 / constants.interval);
 		} else if(this.death_mode === death_modes.shell) {
-			this.level.playSound('shell');
+			var audio = new Audio('death');
+			audio.play();
 			this.setImage(images.enemies, 68, this.direction === directions.right ? 228 : 188);
 			this.deathFrames = Math.floor(250 / constants.interval);
 			this.deathDir = 1;
@@ -1337,9 +1359,126 @@ var Gumpa = Enemy.extend({
  * DOCUMENT READY STARTUP METHOD
  * -------------------------------------------
  */
+$(document).on('click', '#start-game', function() {
+    loadLevel();
+});
+
 $(document).ready(function() {
+	titleScreen();
+	getScores();
+});
+
+/*
+ *-------------------------------------------
+ * Scene Functions
+ *-------------------------------------------
+*/
+
+function titleScreen() {
+	$("#game").append(
+		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+}
+
+/*
+ * -------------------------------------------
+ * DOCUMENT READY STARTUP METHOD
+ * -------------------------------------------
+ */
+
+
+$(document).on('click', '#start-game', function() {
+    chooseName();
+});
+
+$(document).on('click', '#name-submit', function() {
+	username = document.querySelector('#name').value;
+	chooseAvatar();
+});
+
+$(document).on('click', '.avatar', function() {
+	avatar = $(this).val();
+	loadLevel();
+})
+
+$(document).ready(function() {
+	titleScreen();
+	getScores();
+});
+/*
+ *-------------------------------------------
+ * Scene Functions
+ *-------------------------------------------
+*/
+
+function titleScreen() {
+	$("#game").append(
+		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+}
+
+function chooseName() {
+	$("#game").empty().append(
+		$("<input>").attr({id: "name", type: "text", name: "username"}))
+	.append(
+		$("<input>").attr({id: "name-submit", type: "submit", value: "Submit"}));
+}
+
+function chooseAvatar() {
+	$("#game").empty().append(
+		$("<img>").addClass("avatar").attr({id: "one", src: "../Content/BoyAvatar.png", value: "Boy"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "two", src: "../Content/GirlAvatar.png", value: "Girl"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "three", src: "../Content/KmpAvatar.png", value: "Kmp"}));
+}
+
+function loadLevel() {
+	$("#game").empty().append(
+		$("<div>").attr('id', "world"))
+	.append(
+		$("<div>").attr('id', 'coinNumber').addClass("gauge").append("0"))
+	.append(
+		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
+	.append(
+		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
+	.append(
+		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
 	var level = new Level('world');
 	level.load(definedLevels[0]);
 	level.start();
 	keys.bind();
-});
+}
+
+/*
+ * --------------------------------------
+ * Highscore functions
+ * --------------------------------------
+*/
+function getScores() {
+	$("#high-scores").empty().append(
+		$("<tr>").append(
+			$("<th>").append("Rank"))
+		.append(
+			$("<th>").append("Name"))
+		.append(
+			$("<th>").append("High Score")));
+
+	$.get("../API/scores.php", function(data) {
+		var count = 1;
+		for(x in data) {
+			$("#high-scores").append(
+				$('<tr>').append(
+				    $('<td>').append(count))
+				   .append(
+				    $('<td>').append(data[x].username))
+				   .append(
+				   	$('<td>').append(data[x].score)));
+			count++;
+		}
+	}); 
+}
+
+function insertScore(username, score_data) {
+	console.log(score_data);
+	$.post("../API/scores.php", {username: username, score: score_data});
+
+}
