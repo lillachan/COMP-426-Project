@@ -11,9 +11,19 @@
  *---------------------------------------------
 */
 var audio = new Audio('Sunny Side Up.mp3');
+audio.loop = true;
 audio.play();
+var deathAudio = new Audio('death.mp3');
 var username;
+<<<<<<< HEAD
 var avatar ;
+=======
+var avatar;
+
+<<<<<<< HEAD
+>>>>>>> master
+=======
+>>>>>>> master
 /*
  * -------------------------------------------
  * BASE CLASS
@@ -223,9 +233,9 @@ var Level = Base.extend({
 	getGridHeight: function() {
 		return this.raw.height;
 	},
-	setSounds: function(manager) {
+	/*setSounds: function(manager) {
 		this.sounds = manager;
-	},
+	},*/
 	playSound: function(label) {
 		if(this.sounds)
 			this.sounds.play(label);
@@ -992,8 +1002,6 @@ var ItemFigure = Figure.extend({
 	},
 });
 
-
-
 /*
  * -------------------------------------------
  * HERO CLASS
@@ -1067,10 +1075,7 @@ var Mario = Hero.extend({
 		if(!this.crouching) {
 			if(this.onground && keys.up)
 				this.jump();
-				
-			if(keys.accelerate && this.marioState === mario_states.fire)
-				this.shoot();
-				
+	
 			if(keys.right || keys.left)
 				this.walk(keys.left, keys.accelerate);
 			else
@@ -1083,13 +1088,6 @@ var Mario = Hero.extend({
 		this.view.show();
 		this.setImage("../Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
-	},
-	shoot: function() {
-		if(!this.cooldown) {
-			this.cooldown = constants.cooldown;
-			this.level.playSound('shoot');
-			new Bullet(this);
-		}
 	},
 	setVelocity: function(vx, vy) {
 		if(this.crouching) {
@@ -1108,27 +1106,6 @@ var Mario = Hero.extend({
 	},
 	blink: function(times) {
 		this.blinking = Math.max(2 * times * constants.blinkfactor, this.blinking || 0);
-	},
-	invincible: function() {
-		this.level.playMusic('invincibility');
-		this.deadly = Math.floor(constants.invincible / constants.interval);
-		this.invulnerable = this.deadly;
-		this.blink(Math.ceil(this.deadly / (2 * constants.blinkfactor)));
-	},
-	grow: function() {
-		if(this.state === size_states.small) {
-			this.level.playSound('grow');
-			this.setState(size_states.big);
-			this.blink(3);
-		}
-	},
-	shooter: function() {
-		if(this.state === size_states.small)
-			this.grow();
-		else
-			this.level.playSound('grow');
-			
-		this.setMarioState(mario_states.fire);
 	},
 	walk: function(reverse, fast) {
 		this.vx = constants.walking_v * (fast ? 2 : 1) * (reverse ? - 1 : 1);
@@ -1233,7 +1210,8 @@ var Mario = Hero.extend({
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
 		this.setImage("../Content/"+avatar+"-sprites.png", 81, 324);
-		this.level.playMusic('die');
+		audio.muted = true;
+		deathAudio.play();
 		this._super();
 		insertScore(username, this.coins);
 		getScores();
@@ -1321,7 +1299,7 @@ var Enemy = Figure.extend({
 
 /*
  * -------------------------------------------
- * GUMPA CLASS
+ * SQUIRREL CLASS
  * -------------------------------------------
  */
 var Squirrel = Enemy.extend({
@@ -1365,7 +1343,8 @@ var Squirrel = Enemy.extend({
 			this.setImage(images.enemies, 102, 228);
 			this.deathCount = Math.ceil(600 / constants.interval);
 		} else if(this.death_mode === death_modes.shell) {
-			this.level.playSound('shell');
+			var audio = new Audio('death');
+			audio.play();
 			this.setImage(images.enemies, 68, this.direction === directions.right ? 228 : 188);
 			this.deathFrames = Math.floor(250 / constants.interval);
 			this.deathDir = 1;
@@ -1376,37 +1355,46 @@ var Squirrel = Enemy.extend({
 	},
 }, 'squirrel');
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> master
 
 /*
  * -------------------------------------------
- * PLANT CLASS
+ * DOCUMENT READY STARTUP METHOD
  * -------------------------------------------
  */
-var Plant = Enemy.extend({
-	init: function(x, y, level) {
-		this._super(x, y, level);
-		this.setSize(34, 42);
-		this.setupFrames(5, 2, true);
-		this.setImage(images.enemies, 0, 3);
-	},
-	setVelocity: function(vx, vy) {
-		this._super(0, 0);
-	},
-	die: function() {
-		this.level.playSound('shell');
-		this.clearFrames();
-		this._super();
-	},
-	hit: function(opponent) {
-		if(this.invisible)
-			return;
-			
-		if(opponent instanceof Mario) {
-			opponent.hurt(this);
-		}
-	},
+$(document).on('click', '#start-game', function() {
+    loadLevel();
+});
+<<<<<<< HEAD
+>>>>>>> master
+=======
+>>>>>>> master
+
+$(document).ready(function() {
+	titleScreen();
+	getScores();
 });
 
+<<<<<<< HEAD
+=======
+/*
+ *-------------------------------------------
+ * Scene Functions
+ *-------------------------------------------
+*/
+
+function titleScreen() {
+	$("#game").append(
+		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+}
+<<<<<<< HEAD
+>>>>>>> master
+=======
+>>>>>>> master
 
 /*
  * -------------------------------------------
@@ -1414,10 +1402,6 @@ var Plant = Enemy.extend({
  * -------------------------------------------
  */
 
-$(document).ready(function() {
-	titleScreen();
-	getScores();
-});
 
 $(document).on('click', '#start-game', function() {
     chooseName();
@@ -1432,6 +1416,11 @@ $(document).on('click', '.avatar', function() {
 	avatar = $(this).val();
 	loadLevel();
 })
+
+$(document).ready(function() {
+	titleScreen();
+	getScores();
+});
 /*
  *-------------------------------------------
  * Scene Functions
@@ -1508,4 +1497,5 @@ function getScores() {
 function insertScore(username, score_data) {
 	console.log(score_data);
 	$.post("../API/scores.php", {username: username, score: score_data});
+
 }
