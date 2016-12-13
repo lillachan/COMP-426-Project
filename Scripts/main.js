@@ -1380,12 +1380,12 @@ function titleScreen() {
 
 function winScreen(){
 	$("#game").empty().append(
-		$("<img>").attr({id: "win-game", src: 'Content/victory.png'}));
+		$("<img>").attr({id: "win-game", src: 'Content/Victory.png'}));
 }
 
 function loseScreen(){
 	$("#game").empty().append(
-		$("<img>").attr({id: "lose-game", src: 'Content/gameover.png'}));
+		$("<img>").attr({id: "lose-game", src: 'Content/GameOver.png'}));
 }
 
 function chooseName() {
@@ -1397,11 +1397,11 @@ function chooseName() {
 
 function chooseAvatar() {
 	$("#game").empty().append(
-		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "Boy"}))
+		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "boy"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "Girl"}))
+		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "girl"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "Kmp"}));
+		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "kmp"}));
 }
 
 function loadLevel() {
