@@ -3,13 +3,52 @@
  * Global variables for username and avatar
  *---------------------------------------------
 */
-var audio = new Audio('Sunny Side Up.mp3');
+var audio = new Audio('Content/Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
-var deathAudio = new Audio('death.mp3');
+/*var deathAudio = new Audio('Content/death.mp3');
+var jumpAudio = new Audio('Content/jump.mp3');
+var coinAudio = new Audio('Content/coin.mp3');
+var victoryAudio = new Audio('Content/victory.mp3');*/
 var username;
 
 var avatar;
+
+/*soundManager.setup({
+    url: './swf/',
+    flashVersion: 9,
+    preferFlash: true,
+    onready: function() {
+        soundManager.createSound({
+            id: "death",
+            url: ["Content/death.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+        soundManager.createSound({
+            id: "jump",
+            url: ["Content/jump.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+        soundManager.createSound({
+            id: "coin",
+            url: ["Content/coin.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+        soundManager.createSound({
+            id: "victory",
+            url: ["Content/victory.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+    }
+});*/
 
 /*
  * -------------------------------------------
@@ -900,7 +939,8 @@ var Coin = Item.extend({
 	},
 	activate: function(from) {
 		if(!this.activated) {
-			this.level.playSound('coin');
+			//coinAudio.play();
+			//soundManager.play('coin');
 			from.addCoin();
 			this.remove();
 		}
@@ -1062,7 +1102,7 @@ var Mario = Hero.extend({
 		if(!this.crouching) {
 			if(this.onground && keys.up)
 				this.jump();
-	
+
 			if(keys.right || keys.left)
 				this.walk(keys.left, keys.accelerate);
 			else
@@ -1070,7 +1110,9 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
-		this.level.playMusic('success');
+		audio.muted = true;
+		//victoryAudio.play();
+		//soundManager.play('victory');
 		this.clearFrames();
 		this.view.show();
 		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
@@ -1126,7 +1168,8 @@ var Mario = Hero.extend({
 		this.clearFrames();
 	},
 	jump: function() {
-		this.level.playSound('jump');
+		//jumpAudio.play();
+		//soundManager.play('jump');
 		this.vy = constants.jumping_v;
 	},
 	move: function() {
@@ -1198,7 +1241,8 @@ var Mario = Hero.extend({
 		this.setupFrames(9, 2, false);
 		this.setImage("Content/"+avatar+"-sprites.png", 81, 324);
 		audio.muted = true;
-		deathAudio.play();
+		//deathAudio.play();
+		//soundManager.play("death");
 		this._super();
 		insertScore(username, this.coins);
 		getScores();
@@ -1326,12 +1370,9 @@ var Squirrel = Enemy.extend({
 		this.clearFrames();
 		
 		if(this.death_mode === death_modes.normal) {
-			this.level.playSound('enemy_die');
 			this.setImage(images.enemies, 102, 228);
 			this.deathCount = Math.ceil(600 / constants.interval);
 		} else if(this.death_mode === death_modes.shell) {
-			var audio = new Audio('death');
-			audio.play();
 			this.setImage(images.enemies, 68, this.direction === directions.right ? 228 : 188);
 			this.deathFrames = Math.floor(250 / constants.interval);
 			this.deathDir = 1;
@@ -1400,7 +1441,11 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
+<<<<<<< HEAD
+		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
+=======
 		$("<img>").attr({id: "start-game", src: '/Content/StartScreen.png'}));
+>>>>>>> levels
 }
 
 function chooseName() {
@@ -1412,11 +1457,19 @@ function chooseName() {
 
 function chooseAvatar() {
 	$("#game").empty().append(
+<<<<<<< HEAD
+		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "Boy"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "Girl"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "Kmp"}));
+=======
 		$("<img>").addClass("avatar").attr({id: "one", src: "/Content/BoyAvatar.png", value: "Boy"}))
 	.append(
 		$("<img>").addClass("avatar").attr({id: "two", src: "/Content/GirlAvatar.png", value: "Girl"}))
 	.append(
 		$("<img>").addClass("avatar").attr({id: "three", src: "/Content/KmpAvatar.png", value: "Kmp"}));
+>>>>>>> levels
 }
 
 function loadLevel() {
