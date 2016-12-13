@@ -564,14 +564,14 @@ var RightWall = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.top + ground_blocking.right;
 		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 404);
+		this.setImage(images.objects, 854, 404);
 	},
 }, 'rightWall');
 var LeftWall = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.left + ground_blocking.top;
 		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 404);
+		this.setImage(images.objects, 922, 404);
 	},
 }, 'leftWall');
 // var RightGrass = Ground.extend({
