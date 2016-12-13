@@ -16,6 +16,7 @@ audio.play();
 var deathAudio = new Audio('Content/death.mp3');
 var jumpAudio = new Audio('Content/jump.mp3');
 var coinAudio = new Audio('Content/coin.mp3');
+var victoryAudio = new Audio('Content/victory.mp3');
 var username;
 var avatar;
 
@@ -1078,7 +1079,8 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
-		this.level.playMusic('success');
+		audio.muted = true;
+		victoryAudio.play();
 		this.clearFrames();
 		this.view.show();
 		this.setImage("../Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
