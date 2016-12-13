@@ -1,4 +1,4 @@
-﻿/*
+/*
  * *****
  * WRITTEN BY FLORIAN RAPPL, 2012.
  * florian-rappl.de
@@ -1418,32 +1418,23 @@ function chooseAvatar() {
 }
 
 function loadLevel() {
-<<<<<<< HEAD
 	var secondsLeft = 300;
 	var countDown = setInterval(function(){
-	  secondsLeft--;  
-	  $(".countdown").html(secondsLeft + "&nbsp" + "secs");
+		secondsLeft--;
+	  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
       if (secondsLeft == 0) {
 		  clearInterval(countDown);
       }
 	}, 1000); 
 	
-=======
->>>>>>> parent of 85dd972... clock countdown
 	$("#game").empty().append(
 		$("<div>").attr('id', "world"))
 	.append(
 		$("<div>").attr('id', 'coinNumber').addClass("gauge").append("0"))
 	.append(
 		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
-	// .append(
-// 		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
 	.append(
-<<<<<<< HEAD
-		$("<div>").attr('id', 'liveNumber').addClass("countdown").html(secondsLeft + "&nbsp" + "secs"))
-=======
-		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
->>>>>>> parent of 85dd972... clock countdown
+		$("<div>").attr('id', 'liveNumber').addClass("countdown").html(secondsLeft + " " + "seconds"))
 	var level = new Level('world');
 	level.load(definedLevels[0]);
 	level.start();
