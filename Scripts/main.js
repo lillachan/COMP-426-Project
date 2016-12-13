@@ -1403,6 +1403,14 @@ function chooseAvatar() {
 }
 
 function loadLevel() {
+	var secondsLeft = 300;
+		var countDown = setInterval(function(){
+		  secondsLeft--;  
+		  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
+	      if (secondsLeft == 0) {
+			  clearInterval(countDown);
+	      }
+		}, 1000);
 	$("#game").empty().append(
 		$("<div>").attr('id', "world"))
 	.append(
