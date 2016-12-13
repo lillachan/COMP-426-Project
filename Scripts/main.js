@@ -562,25 +562,19 @@ var Ground = Matter.extend({
  */
 var Brick = Ground.extend({
 	init: function(x, y, level) {
-		var blocking = ground_blocking.top;
+		var blocking = ground_blocking.all;
 		this._super(x, y, blocking, level);
 		this.setImage(images.objects, 888, 404);
 	},
 }, 'bricks');
-var RightWall = Ground.extend({
+var Wall = Ground.extend({
 	init: function(x, y, level) {
-		var blocking = ground_blocking.top + ground_blocking.right;
+		var blocking = ground_blocking.top;
 		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 404);
+		this.setImage(images.objects, 888, 404);
 	},
-}, 'rightWall');
-var LeftWall = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.left + ground_blocking.top;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 404);
-	},
-}, 'leftWall');
+}, 'wall');
+
 // var RightGrass = Ground.extend({
 // 	init: function(x, y, level) {
 // 		var blocking = ground_blocking.right;
@@ -615,13 +609,6 @@ var LeftWall = Ground.extend({
  * STONE CLASSES
  * -------------------------------------------
  */
-var Stone = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.all;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 550, 160);
-	},
-}, 'stone');
 // var BrownBlock = Ground.extend({
 // 	init: function(x, y, level) {
 // 		var blocking = ground_blocking.all;
@@ -743,24 +730,6 @@ var RightBush = Decoration.extend({
 		this.setImage(images.objects, 382, 928);
 	},
 }, 'rightBush');
-var RightMiddleBush = Decoration.extend({
-	init: function(x, y, level) {
-		this._super(x, y, level);
-		this.setImage(images.objects, 314, 928);
-	},
-}, 'rightMidBush');
-var MiddleBush = Decoration.extend({
-	init: function(x, y, level) {
-		this._super(x, y, level);
-		this.setImage(images.objects, 348, 928);
-	},
-}, 'midBush');
-var LeftMiddleBush = Decoration.extend({
-	init: function(x, y, level) {
-		this._super(x, y, level);
-		this.setImage(images.objects, 212, 928);
-	},
-}, 'leftMidBush');
 var LeftBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
@@ -1390,7 +1359,7 @@ function loseScreen(){
 
 function chooseName() {
 	$("#game").empty().append(
-		$("<input>").attr({id: "name", type: "text", name: "username"}))
+		$("<input>").attr({id: "name", type: "text", name: "username", placeholder: "username"}))
 	.append(
 		$("<input>").attr({id: "name-submit", type: "submit", value: "Submit"}));
 }
