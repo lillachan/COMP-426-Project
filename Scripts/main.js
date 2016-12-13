@@ -15,15 +15,9 @@ audio.loop = true;
 audio.play();
 var deathAudio = new Audio('death.mp3');
 var username;
-<<<<<<< HEAD
-var avatar ;
-=======
+
 var avatar;
 
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 /*
  * -------------------------------------------
  * BASE CLASS
@@ -1355,12 +1349,6 @@ var Squirrel = Enemy.extend({
 	},
 }, 'squirrel');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
-
 /*
  * -------------------------------------------
  * DOCUMENT READY STARTUP METHOD
@@ -1369,18 +1357,12 @@ var Squirrel = Enemy.extend({
 $(document).on('click', '#start-game', function() {
     loadLevel();
 });
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 
 $(document).ready(function() {
 	titleScreen();
 	getScores();
 });
 
-<<<<<<< HEAD
-=======
 /*
  *-------------------------------------------
  * Scene Functions
@@ -1391,10 +1373,6 @@ function titleScreen() {
 	$("#game").append(
 		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
 }
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 
 /*
  * -------------------------------------------
