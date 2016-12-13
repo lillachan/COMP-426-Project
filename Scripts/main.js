@@ -1211,18 +1211,7 @@ var Mario = Hero.extend({
 		getScores();
 	},
 	hurt: function(from) {
-		if(this.deadly)
-			from.die();
-		else if(this.invulnerable)
-			return;
-		else if(this.state === size_states.small) {
-			this.die();
-		} else {
-			this.invulnerable = Math.floor(constants.invulnerable / constants.interval);
-			this.blink(Math.ceil(this.invulnerable / (2 * constants.blinkfactor)));
-			this.setState(size_states.small);
-			this.level.playSound('hurt');			
-		}
+		this.die();
 	},
 }, 'mario');
 
@@ -1347,20 +1336,6 @@ var Squirrel = Enemy.extend({
 }, 'squirrel');
 
 /*
- * -------------------------------------------
- * DOCUMENT READY STARTUP METHOD
- * -------------------------------------------
- */
-$(document).on('click', '#start-game', function() {
-    loadLevel();
-});
-
-$(document).ready(function() {
-	titleScreen();
-	getScores();
-});
-
-/*
  *-------------------------------------------
  * Scene Functions
  *-------------------------------------------
@@ -1380,6 +1355,10 @@ function titleScreen() {
 
 $(document).on('click', '#start-game', function() {
     chooseName();
+    $("#game").css({
+        'background-size': '100% 100%',
+        'background-image': 'url("Content/backgrounds/01.png")'
+    });
 });
 
 $(document).on('click', '#name-submit', function() {
@@ -1434,6 +1413,10 @@ function loadLevel() {
 		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
 	.append(
 		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
+	$("#game").css({
+        'background-size': '',
+        'background-image': ''
+    });
 	var level = new Level('world');
 	level.load(definedLevels[0]);
 	level.start();
