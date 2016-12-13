@@ -1404,7 +1404,7 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
-		$("<img>").attr({id: "start-game", src: '/Content/StartScreen.png'}));
+		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
 }
 
 function chooseName() {
@@ -1416,11 +1416,11 @@ function chooseName() {
 
 function chooseAvatar() {
 	$("#game").empty().append(
-		$("<img>").addClass("avatar").attr({id: "one", src: "/Content/BoyAvatar.png", value: "Boy"}))
+		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "Boy"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "two", src: "/Content/GirlAvatar.png", value: "Girl"}))
+		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "Girl"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "three", src: "/Content/KmpAvatar.png", value: "Kmp"}));
+		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "Kmp"}));
 }
 
 function loadLevel() {
