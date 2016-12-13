@@ -1359,7 +1359,7 @@ function loseScreen(){
 
 function chooseName() {
 	$("#game").empty().append(
-		$("<input>").attr({id: "name", type: "text", name: "username"}))
+		$("<input>").attr({id: "name", type: "text", name: "username", placeholder: "username"}))
 	.append(
 		$("<input>").attr({id: "name-submit", type: "submit", value: "Submit"}));
 }
