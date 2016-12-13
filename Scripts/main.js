@@ -865,10 +865,10 @@ var Item = Matter.extend({
 
 /*
  * -------------------------------------------
- * COIN CLASSES
+ * Food CLASSES
  * -------------------------------------------
  */
-var Coin = Item.extend({
+var Eggs = Item.extend({
 	init: function(x, y, level) {
 		this._super(x, y, false, level);
 		this.setImage(images.objects, 0, 0);
@@ -877,7 +877,7 @@ var Coin = Item.extend({
 	activate: function(from) {
 		if(!this.activated) {
 			coinAudio.play();
-			from.addCoin();
+			from.addEggs();
 			this.remove();
 		}
 		this._super(from);
@@ -885,74 +885,46 @@ var Coin = Item.extend({
 	remove: function() {
 		this.view.remove();
 	},
-}, 'coin');
-var CoinBoxCoin = Coin.extend({
+}, 'eggs');
+
+var Bacon = Item.extend({
 	init: function(x, y, level) {
-		this._super(x, y, level);
-		this.setImage(images.objects, 96, 0);
-		this.clearFrames();
-		this.view.hide();
-		this.count = 0;
-		this.frames = Math.floor(150 / constants.interval);
-		this.step = Math.ceil(30 / this.frames);
-	},
-	remove: function() { },
-	addToGrid: function() { },
-	addToLevel: function() { },
-	activate: function(from) {
-		this._super(from);
-		this.view.show().css({ 'bottom' : '+=8px' });
-	},
-	act: function() {
-		this.view.css({ 'bottom' : '+=' + this.step + 'px' });
-		this.count++;
-		return (this.count === this.frames);
-	},
-});
-var CoinBox = Item.extend({
-	init: function(x, y, level, amount) {
-		this._super(x, y, true, level);
-		this.setImage(images.objects, 346, 328);
-		this.setAmount(amount || 1);
-	},
-	setAmount: function(amount) {
-		this.items = [];
-		this.actors = [];
-		
-		for(var i = 0; i < amount; i++)
-			this.items.push(new CoinBoxCoin(this.x, this.y, this.level));
+		this._super(x, y, false, level);
+		this.setImage(images.objects, 1, 64);
+		this.setupFrames(10, 4, true);
 	},
 	activate: function(from) {
-		if(!this.isBouncing) {
-			if(this.items.length) {
-				this.bounce();
-				var coin = this.items.pop();
-				coin.activate(from);
-				this.actors.push(coin);
-				
-				if(!this.items.length)
-					this.setImage(images.objects, 514, 194);
-			}
+		if(!this.activated) {
+			coinAudio.play();
+			from.addBacon();
+			this.remove();
 		}
-			
 		this._super(from);
 	},
-	playFrame: function() {
-		for(var i = this.actors.length; i--; ) {
-			if(this.actors[i].act()) {
-				this.actors[i].view.remove();
-				this.actors.splice(i, 1);
-			}
-		}
-		
-		this._super();
+	remove: function() {
+		this.view.remove();
 	},
-}, 'coinbox');
-var MultipleCoinBox = CoinBox.extend({
+}, 'bacon');
+
+var Pancakes = Item.extend({
 	init: function(x, y, level) {
-		this._super(x, y, level, 8);
+		this._super(x, y, false, level);
+		this.setImage(images.objects, 0, 32);
+		this.setupFrames(10, 4, true);
 	},
-}, 'multiple_coinbox');
+	activate: function(from) {
+		if(!this.activated) {
+			coinAudio.play();
+			from.addPancakes();
+			this.remove();
+		}
+		this._super(from);
+	},
+	remove: function() {
+		this.view.remove();
+	},
+}, 'pancakes');
+
 
 /*
  * -------------------------------------------
@@ -1111,8 +1083,14 @@ var Mario = Hero.extend({
 		this.input(keys);		
 		this._super();
 	},
-	addCoin: function() {
+	addEggs: function() {
 		this.setCoins(this.coins + 1);
+	},
+	addBacon: function(){
+		this.setCoins(this.coins +2);
+	},
+	addPancakes: function() {
+		this.setCoins(this.coins +3);
 	},
 	playFrame: function() {		
 		if(this.blinking) {
@@ -1149,7 +1127,6 @@ var Mario = Hero.extend({
 	},
 	setLifes : function(lifes) {
 		this.lifes = lifes;
-		this.level.world.parent().children('#liveNumber').text(this.lifes);
 	},
 	death: function() {
 		if(this.deathBeginWait) {
