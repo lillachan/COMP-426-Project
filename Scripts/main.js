@@ -13,12 +13,48 @@
 var audio = new Audio('Content/Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
-var deathAudio = new Audio('Content/death.mp3');
+/*var deathAudio = new Audio('Content/death.mp3');
 var jumpAudio = new Audio('Content/jump.mp3');
 var coinAudio = new Audio('Content/coin.mp3');
-var victoryAudio = new Audio('Content/victory.mp3');
+var victoryAudio = new Audio('Content/victory.mp3');*/
 var username;
 var avatar;
+
+/*soundManager.setup({
+    url: './swf/',
+    flashVersion: 9,
+    preferFlash: true,
+    onready: function() {
+        soundManager.createSound({
+            id: "death",
+            url: ["Content/death.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+        soundManager.createSound({
+            id: "jump",
+            url: ["Content/jump.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+        soundManager.createSound({
+            id: "coin",
+            url: ["Content/coin.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+        soundManager.createSound({
+            id: "victory",
+            url: ["Content/victory.mp3"],
+            autoLoad: true,
+            autoPlay: false,
+            volume: volume
+        });
+    }
+});*/
 
 /*
  * -------------------------------------------
@@ -909,7 +945,8 @@ var Coin = Item.extend({
 	},
 	activate: function(from) {
 		if(!this.activated) {
-			coinAudio.play();
+			//coinAudio.play();
+			//soundManager.play('coin');
 			from.addCoin();
 			this.remove();
 		}
@@ -1042,7 +1079,7 @@ var Mario = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
-		this.setImage("../Content/"+avatar+"-sprites.png", 81, 0);
+		this.setImage("Content/"+avatar+"-sprites.png", 81, 0);
 		this.crouching = false;
 		this.fast = false;
 	},
@@ -1080,10 +1117,11 @@ var Mario = Hero.extend({
 	},
 	victory: function() {
 		audio.muted = true;
-		victoryAudio.play();
+		//victoryAudio.play();
+		//soundManager.play('victory');
 		this.clearFrames();
 		this.view.show();
-		this.setImage("../Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
+		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
 	},
 	setVelocity: function(vx, vy) {
@@ -1110,33 +1148,34 @@ var Mario = Hero.extend({
 	walkRight: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, true, 'WalkRightSmall'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 0, 0);
+				this.setImage("Content/"+avatar+"-sprites.png", 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 0, 243);
+				this.setImage("Content/"+avatar+"-sprites.png", 0, 243);
 		}
 	},
 	walkLeft: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, false, 'WalkLeftSmall'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 80, 81);
+				this.setImage("Content/"+avatar+"-sprites.png", 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 81, 162);
+				this.setImage("Content/"+avatar+"-sprites.png", 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
-		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
+		this.setImage("Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
-		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
+		this.setImage("Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
-		jumpAudio.play();
+		//jumpAudio.play();
+		//soundManager.play('jump');
 		this.vy = constants.jumping_v;
 	},
 	move: function() {
@@ -1206,9 +1245,10 @@ var Mario = Hero.extend({
 		this.setMarioState(mario_states.normal);
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
-		this.setImage("../Content/"+avatar+"-sprites.png", 81, 324);
+		this.setImage("Content/"+avatar+"-sprites.png", 81, 324);
 		audio.muted = true;
-		deathAudio.play();
+		//deathAudio.play();
+		//soundManager.play("death");
 		this._super();
 		insertScore(username, this.coins);
 		getScores();
@@ -1336,12 +1376,9 @@ var Squirrel = Enemy.extend({
 		this.clearFrames();
 		
 		if(this.death_mode === death_modes.normal) {
-			this.level.playSound('enemy_die');
 			this.setImage(images.enemies, 102, 228);
 			this.deathCount = Math.ceil(600 / constants.interval);
 		} else if(this.death_mode === death_modes.shell) {
-			var audio = new Audio('death');
-			audio.play();
 			this.setImage(images.enemies, 68, this.direction === directions.right ? 228 : 188);
 			this.deathFrames = Math.floor(250 / constants.interval);
 			this.deathDir = 1;
@@ -1375,7 +1412,7 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
-		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
 }
 
 /*
@@ -1411,7 +1448,7 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
-		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
 }
 
 function chooseName() {
@@ -1423,11 +1460,11 @@ function chooseName() {
 
 function chooseAvatar() {
 	$("#game").empty().append(
-		$("<img>").addClass("avatar").attr({id: "one", src: "../Content/BoyAvatar.png", value: "Boy"}))
+		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "Boy"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "two", src: "../Content/GirlAvatar.png", value: "Girl"}))
+		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "Girl"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "three", src: "../Content/KmpAvatar.png", value: "Kmp"}));
+		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "Kmp"}));
 }
 
 function loadLevel() {
@@ -1461,7 +1498,7 @@ function getScores() {
 		.append(
 			$("<th>").append("High Score")));
 
-	$.get("../API/scores.php", function(data) {
+	$.get("API/scores.php", function(data) {
 		var count = 1;
 		for(x in data) {
 			$("#high-scores").append(
@@ -1478,6 +1515,6 @@ function getScores() {
 
 function insertScore(username, score_data) {
 	console.log(score_data);
-	$.post("../API/scores.php", {username: username, score: score_data});
+	$.post("API/scores.php", {username: username, score: score_data});
 
 }
