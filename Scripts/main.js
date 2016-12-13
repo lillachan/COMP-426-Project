@@ -1205,8 +1205,6 @@ var Mario = Hero.extend({
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
 		this.setImage("Content/"+avatar+"-sprites.png", 81, 324);
-		audio.muted = true;
-		deathAudio.play();
 		this._super();
 		insertScore(username, this.coins);
 		getScores();
@@ -1379,12 +1377,17 @@ function titleScreen() {
 
 function winScreen(){
 	$("#game").empty().append(
-		$("<img>").attr({id: "win-game", src: 'Content/victory.png'}));
+		$("<img>").attr({id: "win-game", src: 'Content/Victory.png'}));
 }
 
 function loseScreen(){
 	$("#game").empty().append(
-		$("<img>").attr({id: "lose-game", src: 'Content/gameover.png'}));
+		$("<img>").attr({id: "lose-game", src: 'Content/GameOver.png'}));
+	audio.muted = true;
+	deathAudio.play();
+	setTimeout(function(){
+		deathAudio.muted = true;
+	}, 3000);
 }
 
 function chooseName() {
@@ -1404,7 +1407,7 @@ function chooseAvatar() {
 }
 
 function loadLevel() {
-	var secondsLeft = 300;
+	var secondsLeft = 50;
 	var countDown = setInterval(function(){
 	  secondsLeft--;  
 	  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
