@@ -14,6 +14,8 @@ var audio = new Audio('Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
 var deathAudio = new Audio('death.mp3');
+var jumpAudio = new Audio('jump.mp3');
+jumpAudio.load();
 var username;
 var avatar;
 
@@ -1132,7 +1134,7 @@ var Mario = Hero.extend({
 		this.clearFrames();
 	},
 	jump: function() {
-		this.level.playSound('jump');
+		jumpAudio.play();
 		this.vy = constants.jumping_v;
 	},
 	move: function() {
