@@ -10,12 +10,11 @@
  * Global variables for username and avatar
  *---------------------------------------------
 */
-var audio = new Audio('Sunny Side Up.mp3');
+var audio = new Audio('Content/Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
-var deathAudio = new Audio('death.mp3');
-var jumpAudio = new Audio('jump.mp3');
-jumpAudio.load();
+var deathAudio = new Audio('Content/death.mp3');
+var jumpAudio = new Audio('Content/jump.mp3');
 var username;
 var avatar;
 
