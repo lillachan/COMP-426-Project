@@ -1,4 +1,4 @@
-﻿/*
+/*
  * *****
  * WRITTEN BY FLORIAN RAPPL, 2012.
  * florian-rappl.de
@@ -1766,16 +1766,23 @@ function chooseAvatar() {
 }
 
 function loadLevel() {
+	var secondsLeft = 300;
+	var countDown = setInterval(function(){
+	  secondsLeft--;  
+	  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
+      if (secondsLeft == 0) {
+		  clearInterval(countDown);
+      }
+	}, 1000); 
+	
 	$("#game").empty().append(
 		$("<div>").attr('id', "world"))
 	.append(
 		$("<div>").attr('id', 'coinNumber').addClass("gauge").append("0"))
 	.append(
 		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
-	// .append(
-// 		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
 	.append(
-		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
+		$("<div>").attr('id', 'liveNumber').addClass("countdown").html(secondsLeft + "&nbsp" + "seconds"))
 	var level = new Level('world');
 	level.load(definedLevels[0]);
 	level.start();
