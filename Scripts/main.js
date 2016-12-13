@@ -6,7 +6,6 @@
 var audio = new Audio('Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
-<<<<<<< HEAD
 var deathAudio = new Audio('Content/death.mp3');
 var jumpAudio = new Audio('Content/jump.mp3');
 var coinAudio = new Audio('Content/coin.mp3');
@@ -15,9 +14,6 @@ deathAudio.load();
 jumpAudio.load();
 coinAudio.load();
 victoryAudio.load();
-=======
-var deathAudio = new Audio('death.mp3');
->>>>>>> master
 var username;
 
 var avatar;
@@ -911,7 +907,7 @@ var Coin = Item.extend({
 	},
 	activate: function(from) {
 		if(!this.activated) {
-			this.level.playSound('coin');
+			coinAudio.play();
 			from.addCoin();
 			this.remove();
 		}
@@ -1081,7 +1077,7 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
-		this.level.playMusic('success');
+		victoryAudio.play();
 		this.clearFrames();
 		this.view.show();
 		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
@@ -1137,7 +1133,7 @@ var Mario = Hero.extend({
 		this.clearFrames();
 	},
 	jump: function() {
-		this.level.playSound('jump');
+		jumpAudio.play();
 		this.vy = constants.jumping_v;
 	},
 	move: function() {
