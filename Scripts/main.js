@@ -1,12 +1,5 @@
-﻿/*
- * *****
- * WRITTEN BY FLORIAN RAPPL, 2012.
- * florian-rappl.de
- * mail@florian-rappl.de
- * *****
- */
-/*
- *---------------------------------------------
+﻿
+ /*---------------------------------------------
  * Global variables for username and avatar
  *---------------------------------------------
 */
@@ -18,6 +11,7 @@ var jumpAudio = new Audio('Content/jump.mp3');
 var coinAudio = new Audio('Content/coin.mp3');
 var victoryAudio = new Audio('Content/victory.mp3');*/
 var username;
+
 var avatar;
 
 /*soundManager.setup({
@@ -598,55 +592,55 @@ var Ground = Matter.extend({
  * GRASS CLASSES
  * -------------------------------------------
  */
-var TopGrass = Ground.extend({
+var Brick = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.top;
 		this._super(x, y, blocking, level);
 		this.setImage(images.objects, 888, 404);
 	},
-}, 'grass_top');
-var TopRightGrass = Ground.extend({
+}, 'bricks');
+var RightWall = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.top + ground_blocking.right;
 		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 404);
+		this.setImage(images.objects, 854, 404);
 	},
-}, 'grass_top_right');
-var TopLeftGrass = Ground.extend({
+}, 'rightWall');
+var LeftWall = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.left + ground_blocking.top;
 		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 404);
+		this.setImage(images.objects, 922, 404);
 	},
-}, 'grass_top_left');
-var RightGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.right;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 438);
-	},
-}, 'grass_right');
-var LeftGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.left;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 438);
-	},
-}, 'grass_left');
-var TopRightRoundedGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.top;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 506);
-	},
-}, 'grass_top_right_rounded');
-var TopLeftRoundedGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.top;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 506);
-	},
-}, 'grass_top_left_rounded');
+}, 'leftWall');
+// var RightGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.right;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 922, 438);
+// 	},
+// }, 'grass_right');
+// var LeftGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.left;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 854, 438);
+// 	},
+// }, 'grass_left');
+// var TopRightRoundedGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.top;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 922, 506);
+// 	},
+// }, 'grass_top_right_rounded');
+// var TopLeftRoundedGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.top;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 854, 506);
+// 	},
+// }, 'grass_top_left_rounded');
 
 /*
  * -------------------------------------------
@@ -660,13 +654,13 @@ var Stone = Ground.extend({
 		this.setImage(images.objects, 550, 160);
 	},
 }, 'stone');
-var BrownBlock = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.all;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 514, 194);
-	},
-}, 'brown_block');
+// var BrownBlock = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.all;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 514, 194);
+// 	},
+// }, 'brown_block');
 
 /*
  * -------------------------------------------
@@ -780,31 +774,31 @@ var RightBush = Decoration.extend({
 		this._super(x, y, level);
 		this.setImage(images.objects, 382, 928);
 	},
-}, 'bush_right');
+}, 'rightBush');
 var RightMiddleBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 314, 928);
 	},
-}, 'bush_middle_right');
+}, 'rightMidBush');
 var MiddleBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 348, 928);
 	},
-}, 'bush_middle');
+}, 'midBush');
 var LeftMiddleBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 212, 928);
 	},
-}, 'bush_middle_left');
+}, 'leftMidBush');
 var LeftBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 178, 928);
 	},
-}, 'bush_left');
+}, 'leftBush');
 
 /*
  * -------------------------------------------
@@ -1387,8 +1381,7 @@ var Squirrel = Enemy.extend({
 		
 		this._super();
 	},
-}, 'ballmonster');
-
+}, 'squirrel');
 
 /*
  * -------------------------------------------
@@ -1448,7 +1441,11 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
+<<<<<<< HEAD
 		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
+=======
+		$("<img>").attr({id: "start-game", src: '/Content/StartScreen.png'}));
+>>>>>>> levels
 }
 
 function chooseName() {
@@ -1460,11 +1457,19 @@ function chooseName() {
 
 function chooseAvatar() {
 	$("#game").empty().append(
+<<<<<<< HEAD
 		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "Boy"}))
 	.append(
 		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "Girl"}))
 	.append(
 		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "Kmp"}));
+=======
+		$("<img>").addClass("avatar").attr({id: "one", src: "/Content/BoyAvatar.png", value: "Boy"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "two", src: "/Content/GirlAvatar.png", value: "Girl"}))
+	.append(
+		$("<img>").addClass("avatar").attr({id: "three", src: "/Content/KmpAvatar.png", value: "Kmp"}));
+>>>>>>> levels
 }
 
 function loadLevel() {
