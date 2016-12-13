@@ -1033,7 +1033,7 @@ var Mario = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
-		this.setImage("../Content/"+avatar+"-sprites.png", 81, 0);
+		this.setImage("Content/"+avatar+"-sprites.png", 81, 0);
 		this.crouching = false;
 		this.fast = false;
 	},
@@ -1073,7 +1073,7 @@ var Mario = Hero.extend({
 		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
-		this.setImage("../Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
+		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
 	},
 	setVelocity: function(vx, vy) {
@@ -1100,29 +1100,29 @@ var Mario = Hero.extend({
 	walkRight: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, true, 'WalkRightSmall'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 0, 0);
+				this.setImage("Content/"+avatar+"-sprites.png", 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 0, 243);
+				this.setImage("Content/"+avatar+"-sprites.png", 0, 243);
 		}
 	},
 	walkLeft: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, false, 'WalkLeftSmall'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 80, 81);
+				this.setImage("Content/"+avatar+"-sprites.png", 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 81, 162);
+				this.setImage("Content/"+avatar+"-sprites.png", 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
-		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
+		this.setImage("Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
-		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
+		this.setImage("Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
@@ -1196,7 +1196,7 @@ var Mario = Hero.extend({
 		this.setMarioState(mario_states.normal);
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
-		this.setImage("../Content/"+avatar+"-sprites.png", 81, 324);
+		this.setImage("Content/"+avatar+"-sprites.png", 81, 324);
 		audio.muted = true;
 		deathAudio.play();
 		this._super();
@@ -1364,7 +1364,7 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
-		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
 }
 
 /*
@@ -1450,7 +1450,7 @@ function getScores() {
 		.append(
 			$("<th>").append("High Score")));
 
-	$.get("../API/scores.php", function(data) {
+	$.get("API/scores.php", function(data) {
 		var count = 1;
 		for(x in data) {
 			$("#high-scores").append(
@@ -1467,6 +1467,6 @@ function getScores() {
 
 function insertScore(username, score_data) {
 	console.log(score_data);
-	$.post("../API/scores.php", {username: username, score: score_data});
+	$.post("API/scores.php", {username: username, score: score_data});
 
 }
