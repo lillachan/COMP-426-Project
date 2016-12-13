@@ -8,6 +8,7 @@ class Achievements{
 	}
 
 	public function getJSON(){
+		
 		$json_obj = array('AchivementID' => $this->id,
 			'Achievement' => $this->achievement);
 		return json_encode($json_obj);
