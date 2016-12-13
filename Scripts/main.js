@@ -1077,11 +1077,13 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
+		audio.muted = true;
 		victoryAudio.play();
 		this.clearFrames();
 		this.view.show();
 		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
+		winScreen();
 	},
 	setVelocity: function(vx, vy) {
 		if(this.crouching) {
@@ -1209,6 +1211,7 @@ var Mario = Hero.extend({
 		this._super();
 		insertScore(username, this.coins);
 		getScores();
+		loseScreen();
 	},
 	hurt: function(from) {
 		this.die();
@@ -1336,17 +1339,6 @@ var Squirrel = Enemy.extend({
 }, 'squirrel');
 
 /*
- *-------------------------------------------
- * Scene Functions
- *-------------------------------------------
-*/
-
-function titleScreen() {
-	$("#game").append(
-		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
-}
-
-/*
  * -------------------------------------------
  * DOCUMENT READY STARTUP METHOD
  * -------------------------------------------
@@ -1386,6 +1378,16 @@ function titleScreen() {
 		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
 }
 
+function winScreen(){
+	$("#game").empty().append(
+		$("<img>").attr({id: "win-game", src: 'Content/victory.png'}));
+}
+
+function loseScreen(){
+	$("#game").empty().append(
+		$("<img>").attr({id: "lose-game", src: 'Content/gameover.png'}));
+}
+
 function chooseName() {
 	$("#game").empty().append(
 		$("<input>").attr({id: "name", type: "text", name: "username"}))
@@ -1395,22 +1397,24 @@ function chooseName() {
 
 function chooseAvatar() {
 	$("#game").empty().append(
-		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "boy"}))
+		$("<img>").addClass("avatar").attr({id: "one", src: "Content/BoyAvatar.png", value: "Boy"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "girl"}))
+		$("<img>").addClass("avatar").attr({id: "two", src: "Content/GirlAvatar.png", value: "Girl"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "kmp"}));
+		$("<img>").addClass("avatar").attr({id: "three", src: "Content/KmpAvatar.png", value: "Kmp"}));
 }
 
 function loadLevel() {
-	var secondsLeft = 300;
-		var countDown = setInterval(function(){
-		  secondsLeft--;  
-		  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
-	      if (secondsLeft == 0) {
-			  clearInterval(countDown);
-	      }
-		}, 1000);
+	var secondsLeft = 500;
+	var countDown = setInterval(function(){
+	  secondsLeft--;  
+	  $(".countdown").html(secondsLeft + "&nbsp" + "seconds");
+      if (secondsLeft == 0) {
+		  clearInterval(countDown);
+		  loseScreen();
+      }
+	}, 1000); 
+	
 	$("#game").empty().append(
 		$("<div>").attr('id', "world"))
 	.append(
@@ -1418,16 +1422,14 @@ function loadLevel() {
 	.append(
 		$("<div>").attr('id', 'coin').addClass("gaugeSprite"))
 	.append(
-		$("<div>").attr('id', 'liveNumber').addClass("gauge").append("0"))
-	.append(
-		$("<div>").attr('id', 'live').addClass("gaugeSprite"));
+		$("<div>").attr('id', 'liveNumber').addClass("countdown").html(secondsLeft + "&nbsp" + "seconds"))
 	$("#game").css({
         'background-size': '',
         'background-image': ''
     });
 	var level = new Level('world');
-	level.load(definedLevels[0]);
-	level.start();
+		level.load(definedLevels[0]);
+		level.start();
 	keys.bind();
 }
 
