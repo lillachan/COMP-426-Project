@@ -1,18 +1,12 @@
-﻿/*
- * *****
- * WRITTEN BY FLORIAN RAPPL, 2012.
- * florian-rappl.de
- * mail@florian-rappl.de
- * *****
- */
-/*
- *---------------------------------------------
+﻿
+ /*---------------------------------------------
  * Global variables for username and avatar
  *---------------------------------------------
 */
-var audio = new Audio('Content/Sunny Side Up.mp3');
+var audio = new Audio('Sunny Side Up.mp3');
 audio.loop = true;
 audio.play();
+<<<<<<< HEAD
 var deathAudio = new Audio('Content/death.mp3');
 var jumpAudio = new Audio('Content/jump.mp3');
 var coinAudio = new Audio('Content/coin.mp3');
@@ -21,7 +15,11 @@ deathAudio.load();
 jumpAudio.load();
 coinAudio.load();
 victoryAudio.load();
+=======
+var deathAudio = new Audio('death.mp3');
+>>>>>>> master
 var username;
+
 var avatar;
 
 /*
@@ -566,55 +564,55 @@ var Ground = Matter.extend({
  * GRASS CLASSES
  * -------------------------------------------
  */
-var TopGrass = Ground.extend({
+var Brick = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.top;
 		this._super(x, y, blocking, level);
 		this.setImage(images.objects, 888, 404);
 	},
-}, 'grass_top');
-var TopRightGrass = Ground.extend({
+}, 'bricks');
+var RightWall = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.top + ground_blocking.right;
 		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 404);
+		this.setImage(images.objects, 854, 404);
 	},
-}, 'grass_top_right');
-var TopLeftGrass = Ground.extend({
+}, 'rightWall');
+var LeftWall = Ground.extend({
 	init: function(x, y, level) {
 		var blocking = ground_blocking.left + ground_blocking.top;
 		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 404);
+		this.setImage(images.objects, 922, 404);
 	},
-}, 'grass_top_left');
-var RightGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.right;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 438);
-	},
-}, 'grass_right');
-var LeftGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.left;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 438);
-	},
-}, 'grass_left');
-var TopRightRoundedGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.top;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 922, 506);
-	},
-}, 'grass_top_right_rounded');
-var TopLeftRoundedGrass = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.top;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 854, 506);
-	},
-}, 'grass_top_left_rounded');
+}, 'leftWall');
+// var RightGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.right;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 922, 438);
+// 	},
+// }, 'grass_right');
+// var LeftGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.left;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 854, 438);
+// 	},
+// }, 'grass_left');
+// var TopRightRoundedGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.top;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 922, 506);
+// 	},
+// }, 'grass_top_right_rounded');
+// var TopLeftRoundedGrass = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.top;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 854, 506);
+// 	},
+// }, 'grass_top_left_rounded');
 
 /*
  * -------------------------------------------
@@ -628,13 +626,13 @@ var Stone = Ground.extend({
 		this.setImage(images.objects, 550, 160);
 	},
 }, 'stone');
-var BrownBlock = Ground.extend({
-	init: function(x, y, level) {
-		var blocking = ground_blocking.all;
-		this._super(x, y, blocking, level);
-		this.setImage(images.objects, 514, 194);
-	},
-}, 'brown_block');
+// var BrownBlock = Ground.extend({
+// 	init: function(x, y, level) {
+// 		var blocking = ground_blocking.all;
+// 		this._super(x, y, blocking, level);
+// 		this.setImage(images.objects, 514, 194);
+// 	},
+// }, 'brown_block');
 
 /*
  * -------------------------------------------
@@ -748,31 +746,31 @@ var RightBush = Decoration.extend({
 		this._super(x, y, level);
 		this.setImage(images.objects, 382, 928);
 	},
-}, 'bush_right');
+}, 'rightBush');
 var RightMiddleBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 314, 928);
 	},
-}, 'bush_middle_right');
+}, 'rightMidBush');
 var MiddleBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 348, 928);
 	},
-}, 'bush_middle');
+}, 'midBush');
 var LeftMiddleBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 212, 928);
 	},
-}, 'bush_middle_left');
+}, 'leftMidBush');
 var LeftBush = Decoration.extend({
 	init: function(x, y, level) {
 		this._super(x, y, level);
 		this.setImage(images.objects, 178, 928);
 	},
-}, 'bush_left');
+}, 'leftBush');
 
 /*
  * -------------------------------------------
@@ -913,7 +911,7 @@ var Coin = Item.extend({
 	},
 	activate: function(from) {
 		if(!this.activated) {
-			coinAudio.play();
+			this.level.playSound('coin');
 			from.addCoin();
 			this.remove();
 		}
@@ -1046,7 +1044,7 @@ var Mario = Hero.extend({
 		this.deathDir = 1;
 		this.deathCount = 0;
 		this.direction = directions.right;
-		this.setImage("../Content/"+avatar+"-sprites.png", 81, 0);
+		this.setImage("Content/"+avatar+"-sprites.png", 81, 0);
 		this.crouching = false;
 		this.fast = false;
 	},
@@ -1075,7 +1073,7 @@ var Mario = Hero.extend({
 		if(!this.crouching) {
 			if(this.onground && keys.up)
 				this.jump();
-
+	
 			if(keys.right || keys.left)
 				this.walk(keys.left, keys.accelerate);
 			else
@@ -1083,11 +1081,10 @@ var Mario = Hero.extend({
 		}
 	},
 	victory: function() {
-		audio.muted = true;
-		victoryAudio.play();
+		this.level.playMusic('success');
 		this.clearFrames();
 		this.view.show();
-		this.setImage("../Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
+		this.setImage("Content/"+avatar+"-sprites.png", this.state === size_states.small ? 241 : 161, 81);
 		this.level.next();
 	},
 	setVelocity: function(vx, vy) {
@@ -1114,33 +1111,33 @@ var Mario = Hero.extend({
 	walkRight: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, true, 'WalkRightSmall'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 0, 0);
+				this.setImage("Content/"+avatar+"-sprites.png", 0, 0);
 		} else {
 			if(!this.setupFrames(9, 2, true, 'WalkRightBig'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 0, 243);
+				this.setImage("Content/"+avatar+"-sprites.png", 0, 243);
 		}
 	},
 	walkLeft: function() {
 		if(this.state === size_states.small) {
 			if(!this.setupFrames(8, 2, false, 'WalkLeftSmall'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 80, 81);
+				this.setImage("Content/"+avatar+"-sprites.png", 80, 81);
 		} else {
 			if(!this.setupFrames(9, 2, false, 'WalkLeftBig'))
-				this.setImage("../Content/"+avatar+"-sprites.png", 81, 162);
+				this.setImage("Content/"+avatar+"-sprites.png", 81, 162);
 		}
 	},
 	stand: function() {
 		var coords = this.standSprites[this.state - 1][this.direction === directions.left ? 0 : 1][this.onground ? 0 : 1];
-		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
+		this.setImage("Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	crouch: function() {
 		var coords = this.crouchSprites[this.state - 1][this.direction === directions.left ? 0 : 1];
-		this.setImage("../Content/"+avatar+"-sprites.png", coords.x, coords.y);
+		this.setImage("Content/"+avatar+"-sprites.png", coords.x, coords.y);
 		this.clearFrames();
 	},
 	jump: function() {
-		jumpAudio.play();
+		this.level.playSound('jump');
 		this.vy = constants.jumping_v;
 	},
 	move: function() {
@@ -1210,7 +1207,7 @@ var Mario = Hero.extend({
 		this.setMarioState(mario_states.normal);
 		this.deathStepDown = Math.ceil(240 / this.deathFrames);
 		this.setupFrames(9, 2, false);
-		this.setImage("../Content/"+avatar+"-sprites.png", 81, 324);
+		this.setImage("Content/"+avatar+"-sprites.png", 81, 324);
 		audio.muted = true;
 		deathAudio.play();
 		this._super();
@@ -1351,8 +1348,7 @@ var Squirrel = Enemy.extend({
 		
 		this._super();
 	},
-}, 'ballmonster');
-
+}, 'squirrel');
 
 /*
  * -------------------------------------------
@@ -1376,7 +1372,7 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
-		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+		$("<img>").attr({id: "start-game", src: 'Content/StartScreen.png'}));
 }
 
 /*
@@ -1412,7 +1408,7 @@ $(document).ready(function() {
 
 function titleScreen() {
 	$("#game").append(
-		$("<img>").attr({id: "start-game", src: '../Content/StartScreen.png'}));
+		$("<img>").attr({id: "start-game", src: '/Content/StartScreen.png'}));
 }
 
 function chooseName() {
@@ -1424,11 +1420,11 @@ function chooseName() {
 
 function chooseAvatar() {
 	$("#game").empty().append(
-		$("<img>").addClass("avatar").attr({id: "one", src: "../Content/BoyAvatar.png", value: "Boy"}))
+		$("<img>").addClass("avatar").attr({id: "one", src: "/Content/BoyAvatar.png", value: "Boy"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "two", src: "../Content/GirlAvatar.png", value: "Girl"}))
+		$("<img>").addClass("avatar").attr({id: "two", src: "/Content/GirlAvatar.png", value: "Girl"}))
 	.append(
-		$("<img>").addClass("avatar").attr({id: "three", src: "../Content/KmpAvatar.png", value: "Kmp"}));
+		$("<img>").addClass("avatar").attr({id: "three", src: "/Content/KmpAvatar.png", value: "Kmp"}));
 }
 
 function loadLevel() {
@@ -1462,7 +1458,7 @@ function getScores() {
 		.append(
 			$("<th>").append("High Score")));
 
-	$.get("../API/scores.php", function(data) {
+	$.get("API/scores.php", function(data) {
 		var count = 1;
 		for(x in data) {
 			$("#high-scores").append(
@@ -1479,6 +1475,6 @@ function getScores() {
 
 function insertScore(username, score_data) {
 	console.log(score_data);
-	$.post("../API/scores.php", {username: username, score: score_data});
+	$.post("API/scores.php", {username: username, score: score_data});
 
 }

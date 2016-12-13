@@ -8,6 +8,7 @@ class Avatar{
 	}
 
 	public function getJSON(){
+		connect(); 
 		$json_obj = array('AvatarID' => $this->id,
 			'Avatar' => $this->avatar);
 		return json_encode($json_obj);
