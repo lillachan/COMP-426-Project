@@ -15,6 +15,7 @@ audio.loop = true;
 audio.play();
 var deathAudio = new Audio('Content/death.mp3');
 var jumpAudio = new Audio('Content/jump.mp3');
+var coinAudio = new Audio('Content/coin.mp3');
 var username;
 var avatar;
 
@@ -907,7 +908,7 @@ var Coin = Item.extend({
 	},
 	activate: function(from) {
 		if(!this.activated) {
-			this.level.playSound('coin');
+			coinAudio.play();
 			from.addCoin();
 			this.remove();
 		}
@@ -1069,11 +1070,7 @@ var Mario = Hero.extend({
 		if(!this.crouching) {
 			if(this.onground && keys.up)
 				this.jump();
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> master
 			if(keys.right || keys.left)
 				this.walk(keys.left, keys.accelerate);
 			else
