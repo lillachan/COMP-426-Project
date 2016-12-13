@@ -17,6 +17,10 @@ var deathAudio = new Audio('Content/death.mp3');
 var jumpAudio = new Audio('Content/jump.mp3');
 var coinAudio = new Audio('Content/coin.mp3');
 var victoryAudio = new Audio('Content/victory.mp3');
+deathAudio.load();
+jumpAudio.load();
+coinAudio.load();
+victoryAudio.load();
 var username;
 var avatar;
 
@@ -1336,12 +1340,9 @@ var Squirrel = Enemy.extend({
 		this.clearFrames();
 		
 		if(this.death_mode === death_modes.normal) {
-			this.level.playSound('enemy_die');
 			this.setImage(images.enemies, 102, 228);
 			this.deathCount = Math.ceil(600 / constants.interval);
 		} else if(this.death_mode === death_modes.shell) {
-			var audio = new Audio('death');
-			audio.play();
 			this.setImage(images.enemies, 68, this.direction === directions.right ? 228 : 188);
 			this.deathFrames = Math.floor(250 / constants.interval);
 			this.deathDir = 1;
